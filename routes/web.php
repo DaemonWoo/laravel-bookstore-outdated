@@ -1,19 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Livewire\Auth\Login;
-use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
-use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\BookCategories\BookCategoryList;
+use App\Http\Livewire\BookCategories\CreateBookCategory;
+use App\Http\Livewire\BookCategories\EditBookCategory;
 use App\Http\Livewire\Books\BookComponent;
 use App\Http\Livewire\Books\BooksComponent;
 use App\Http\Livewire\Books\CreateBook;
-use App\Http\Livewire\BookCategories\CreateBookCategory;
-use App\Http\Livewire\BookCategories\EditBookCategory;
 use App\Http\Livewire\Books\EditBookComponent;
 use App\Http\Livewire\Components\HomeComponent;
 use App\Http\Livewire\Workers\CreateWorker;
@@ -31,9 +28,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-
 
 Route::middleware('isWorker')->group(function () {
     Route::get('/categories/create', CreateBookCategory::class);

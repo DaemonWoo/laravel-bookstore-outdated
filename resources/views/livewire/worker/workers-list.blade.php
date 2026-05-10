@@ -1,38 +1,75 @@
-<div x-data='{show: true}'>
+<div x-data="{ show: true }" class="min-h-screen bg-gray-100">
 
-    <div>
-        @livewire('components.navigation')
-    </div>
-    {{-- If your happiness depends on money, you will never be happy with yourself. --}}
-    <div class="m-20">
-        <a href="/workers/create" class="bg-blue-700 hover:bg-sky-900 text-gray-100 rounded p-2">Create new worker</a>
+    {{-- Navigation --}}
+    @livewire('components.navigation')
 
+    <div class="max-w-5xl mx-auto px-4 py-10 space-y-6">
+
+        {{-- Header --}}
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+
+            <h1 class="text-2xl font-bold text-gray-800">
+                Workers
+            </h1>
+
+            <a href="/workers/create" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                + Create Worker
+            </a>
+
+        </div>
+
+        {{-- Alert --}}
         @if(session('status'))
+        <div x-show="show" x-transition class="relative bg-blue-600 text-white px-4 py-3 rounded-lg shadow">
+            <p>{{ session('status') }}</p>
 
-            <div x-show="show" class="m-5 bg-blue-700 border text-white px-4 py-3 rounded relative" role="alert">
-                <p>{{session('status')}}</p>
-                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                    <svg x-on:click="show = false" class="fill-current h-6 w-6 text-white" role="button"
-                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path
-                        d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-                </span>
+            <button x-on:click="show = false" class="absolute top-2 right-2 text-white hover:text-gray-200">
+                ✕
+            </button>
+        </div>
+        @endif
+
+        {{-- Workers list --}}
+        <div class="space-y-4">
+
+            @forelse($workers as $worker)
+
+            <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+                {{-- Info --}}
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800">
+                        {{ $worker->name }}
+                    </h2>
+                    <p class="text-gray-600 text-sm">
+                        {{ $worker->email }}
+                    </p>
+                </div>
+
+                {{-- Actions --}}
+                <div class="flex gap-2">
+
+                    <a href="/workers/{{ $worker->id }}/edit" class="px-3 py-1 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition">
+                        Edit
+                    </a>
+
+                    <button wire:click="deleteWorker({{ $worker->id }})" class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                        Delete
+                    </button>
+
+                </div>
+
             </div>
 
-        @endif
-        @foreach($workers as $worker)
-            <section class="flex flex-row m-20">
-                <div class="w-1/3">
-                <h2>{{$worker->name}}</h2>
-                <p>email: {{$worker->email}}</p>
-                </div>
-                <a href="/workers/{{$worker->id}}/edit" class="ml-5 bg-sky-500 hover:bg-sky-700 rounded p-2">Edit
-                    worker</a>
-                <button wire:click="deleteWorker({{$worker->id}})" class="ml-5 bg-red-500 hover:bg-red-700 rounded p-2">
-                    Delete worker
-                </button>
-            </section>
+            @empty
 
-        @endforeach
+            <div class="text-center text-gray-500 py-10">
+                No workers found.
+            </div>
+
+            @endforelse
+
+        </div>
+
     </div>
-
 </div>

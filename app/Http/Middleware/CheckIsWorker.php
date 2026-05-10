@@ -16,9 +16,10 @@ class CheckIsWorker
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->isWorker()) {
+        if (Auth::user()->isWorker()) {
             return $next($request);
         }
+
         return redirect('/');
     }
 }

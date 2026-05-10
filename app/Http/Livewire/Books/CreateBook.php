@@ -11,11 +11,17 @@ class CreateBook extends Component
     use WithFileUploads;
 
     public $title = '';
+
     public $slug = '';
+
     public $description = '';
+
     public $author = '';
+
     public $cover;
+
     public $rating = 1;
+
     public $category = 1;
 
     protected $rules = [
@@ -39,8 +45,9 @@ class CreateBook extends Component
             'author' => $this->author,
             'cover' => $coverPath,
             'rating' => $this->rating,
-            'category_id' => $this->category
+            'category_id' => $this->category,
         ]);
+
         return redirect('/')->with('message', 'Book created!');
     }
 

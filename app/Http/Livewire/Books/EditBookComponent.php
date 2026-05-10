@@ -3,23 +3,27 @@
 namespace App\Http\Livewire\Books;
 
 use App\Models\Book;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-
 
 class EditBookComponent extends Component
 {
     use WithFileUploads;
 
     public $title = '';
+
     public $slug = '';
+
     public $description = '';
+
     public $author = '';
+
     public $cover;
+
     public $rating = 1;
+
     public $category = 1;
+
     public $bookId;
 
     protected $rules = [
@@ -31,6 +35,7 @@ class EditBookComponent extends Component
         'rating' => ['required'],
         'category' => ['required'],
     ];
+
     public function mount($id)
     {
         $this->bookId = $id;
@@ -47,17 +52,20 @@ class EditBookComponent extends Component
             'author' => $this->author,
             'cover' => $coverPath,
             'rating' => $this->rating,
-            'category_id' => $this->category
+            'category_id' => $this->category,
         ]);
+
         return redirect('/')->with('message', 'Book updated');
     }
+
     public function render()
     {
         $book = Book::findOrFail($this->bookId);
         $title = $book->title;
+
         return view('livewire.book.edit-book-component', [
             'book' => $book,
-            'title' => $title
+            'title' => $title,
         ]);
     }
 }

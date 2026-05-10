@@ -1,11 +1,15 @@
 services:
+  # service name. Compose will create a container with this name
   app:
     image: serversideup/php:8.1-fpm-nginx 
     container_name: laravel_app
+    #  mounts the current directory to /var/www/html inside the container
     volumes:
       - .:/var/www/html 
+      # HOST PORT:CONTAINER PORT
     ports:
-      - "8081:80"           
+      - "8081:80"   
+      # enviroment variables        
     environment:
       - DOCROOT=/var/www/html/public
       - SSL_MODE=off
@@ -24,7 +28,8 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: secret
     ports:
-      - "5432:5432"           
+      - "5432:5432"    
+      # db data is saved outside the container, inside this directory 
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:

@@ -23,7 +23,7 @@ class BookFactory extends Factory
             'description' => fake()->text(),
             'rating' => fake()->numberBetween(0, 5),
             'category_id' => fake()->numberBetween(1, 5),
-            'cover' => "https://img.freepik.com/free-vector/abstract-elegant-winter-book-cover_23-2148798745.jpg?w=2000"
+            'cover' => 'https://img.freepik.com/free-vector/abstract-elegant-winter-book-cover_23-2148798745.jpg?w=2000',
         ];
     }
 }

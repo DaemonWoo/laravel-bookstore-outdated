@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'title' => fake()->unique()->colorName(),
-            'slug' => fake()->unique()->slug()
+            'slug' => fake()->unique()->slug(),
         ];
     }
 }

@@ -12,7 +12,9 @@ use Livewire\Component;
 class CreateWorker extends Component
 {
     public $name = '';
+
     public $email = '';
+
     public $password = '';
 
     protected $rules = [
@@ -29,12 +31,12 @@ class CreateWorker extends Component
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            'role_id' => 1
+            'role_id' => 1,
         ]);
         SendWorkerCreatedEmail::dispatch($newWorker);
         //$newWorker->notify(new WorkerCreatedNotification());
 
-       //Mail::to("testlibrary@teml.net")->send(new \App\Mail\CreateWorker($this->name));
+        //Mail::to("testlibrary@teml.net")->send(new \App\Mail\CreateWorker($this->name));
         return redirect()->intended(route('workers'))->with('status', 'Worker added successfully!');
     }
 

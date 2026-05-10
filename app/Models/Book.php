@@ -11,14 +11,16 @@ class Book extends Model
 
     protected $fillable = [
         'title', 'slug', 'author', 'rating', 'description',
-        'avatar', 'cover', 'category_id'
+        'avatar', 'cover', 'category_id',
     ];
 
-    function category() {
+    public function category()
+    {
         return $this->belongsTo('Category');
     }
 
-    function comments() {
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
 }

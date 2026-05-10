@@ -8,7 +8,6 @@ use Livewire\Component;
 
 class HomeComponent extends Component
 {
-
     public function render()
     {
         $cats = Category::all();
@@ -16,7 +15,7 @@ class HomeComponent extends Component
 
         return view('livewire.components.home-component', [
             'cats' => $cats,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 }

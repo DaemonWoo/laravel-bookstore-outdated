@@ -1,16 +1,37 @@
-<div>
-    @if($cats)
-        @foreach($cats as $cat)
-            <div class="m-2 p-4 border-2 border-amber-50 justify-between gap-4">
-            <h3 class=" bg-white rounded p-2 m-2">
-                {{$cat->title}}
-            </h3>
-            @if(auth()->user()->isWorker())
-                <a class="bg-blue-200 p-2 hover:bg-white rounded p-2" href="/categories/{{$cat->id}}/edit">Edit</a>
-                <button wire:click="deleteCategory({{$cat->id}})" class="bg-red-500 hover:bg-red-700 rounded p-2">Delete</button>
-            @endif
-            </div>
-        @endforeach
-    @else <h2>No categories yet!</h2>
-    @endif
+<div class="space-y-3">
+
+    @forelse($cats as $cat)
+
+    <div class="flex items-center justify-between bg-white border rounded-xl p-4 shadow-sm hover:shadow-md transition">
+
+        {{-- Title --}}
+        <h3 class="text-gray-800 font-medium">
+            {{ $cat->title }}
+        </h3>
+
+        {{-- Actions --}}
+        @if(auth()->check() && auth()->user()->isWorker())
+        <div class="flex gap-2">
+
+            <a href="/categories/{{ $cat->id }}/edit" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                Edit
+            </a>
+
+            <button wire:click="deleteCategory({{ $cat->id }})" class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                Delete
+            </button>
+
+        </div>
+        @endif
+
+    </div>
+
+    @empty
+
+    <div class="text-center py-6 text-gray-500">
+        No categories yet!
+    </div>
+
+    @endforelse
+
 </div>

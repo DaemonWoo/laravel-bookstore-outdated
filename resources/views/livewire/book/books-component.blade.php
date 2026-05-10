@@ -1,47 +1,97 @@
-<div>
-    @if(substr($cUrl, -5) == 'books')
-        <div>
-            @livewire('components.navigation')
+<div class="min-h-screen bg-gray-100 ">
+
+    {{-- Optional navigation --}}
+    @if(str_ends_with($cUrl, 'books'))
+    @livewire('components.navigation')
+    @endif
+
+    <div class="max-w-6xl mx-auto px-4 space-y-6">
+
+        {{-- Header / Actions --}}
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+
+            @if(auth()->check() && auth()->user()->isWorker())
+            <a href="/books/create" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                + Create Book
+            </a>
+            @endif
+
         </div>
-    @endif
 
-    <div class="flex flex-col items-center justify-center">
-    @if(auth()->user()->isWorker())
-        <a href="/books/create" class="rounded p-3 m-5 bg-blue-400 text-gray-100 border-2 border-cyan-400">
-            Create new book
-        </a>
+        {{-- Books grid --}}
+        <div class="bg-white rounded-2xl shadow-md p-6">
 
-    @endif
-    <ul class="bg-green-300 w-3/4 border-4">
-        @if(count($books))
-            <h1>All books</h1>
-        @else <h1>No books yet</h1>
-        @endif
-        {{$books->links()}}
-        @foreach ($books as $book)
-            <li class="flex flex-col gap-4 border-2 p-5 items-center">
-                <h6>category {{$book->category_id}}</h6>
-                <a href="/books/{{$book->id}}">
-                <h2>Title: {{$book->title}}</h2>
-                <p>Author: {{$book->author}}</p>
-                <p>Description: {{$book->description}}</p>
-                <p>Rating: {{$book->rating}}</p>
-                    @if(substr($book->cover, 0, 4)!='http')
-                        <img src="{{asset('storage/'.substr($book->cover, 7))}}" alt="cover" height="150px" width="150px">
-                    @else
-                        <img src="https://img.freepik.com/free-vector/abstract-elegant-winter-book-cover_23-2148798745.jpg?w=2000" alt="cover" height="100px" width="100px">
+            @if(!$books->count())
+            <p class="text-center text-gray-500 py-10">
+                No books yet
+            </p>
+            @endif
+
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+                @foreach($books as $book)
+                <div class="border rounded-xl p-4 bg-gray-50 hover:shadow-md transition flex flex-col">
+
+                    {{-- Category --}}
+                    {{-- <span class="text-xs text-gray-500 mb-2">
+                        Category: {{ $book->category_id }}
+                    </span> --}}
+
+                    {{-- Link --}}
+                    <a href="/books/{{ $book->id }}" class="space-y-2 flex-1">
+
+                        <h2 class="text-lg font-semibold text-gray-800">
+                            {{ $book->title }}
+                        </h2>
+
+                        <p class="text-sm text-gray-600">
+                            {{ $book->author }}
+                        </p>
+
+                        <p class="text-sm text-gray-500 line-clamp-3">
+                            {{ $book->description }}
+                        </p>
+
+                        <p class="text-yellow-600 font-medium">
+                            Rating: {{ $book->rating }}
+                        </p>
+
+                        @php
+                        $isExternal = str_starts_with($book->cover, 'http');
+                        $cover = $isExternal
+                        ? $book->cover
+                        : asset('storage/' . substr($book->cover, 7));
+                        @endphp
+
+                        <img src="{{ $cover }}" onerror="this.src='https://img.freepik.com/free-vector/abstract-elegant-winter-book-cover_23-2148798745.jpg?w=800'" class="w-full h-48 object-cover rounded-lg mt-2" alt="cover" />
+
+                    </a>
+
+                    {{-- Admin actions --}}
+                    @if(auth()->check() && auth()->user()->isWorker())
+                    <div class="flex gap-2 mt-4">
+
+                        <a href="/books/{{ $book->id }}/edit" class="flex-1 text-center bg-sky-500 hover:bg-sky-600 text-white rounded-lg py-2">
+                            Edit
+                        </a>
+
+                        <button wire:click="deleteBook({{ $book->id }})" class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-lg py-2">
+                            Delete
+                        </button>
+
+                    </div>
                     @endif
 
-                </a>
-                @if(auth()->user()->isWorker())
-                    <a href="/books/{{$book->id}}/edit" class="bg-sky-500 hover:bg-sky-700 rounded p-2">Edit book</a>
-                    <button wire:click="deleteBook({{$book->id}})" class="bg-red-500 hover:bg-red-700 rounded p-2">Delete book</button>
-                @endif
+                </div>
+                @endforeach
 
-            </li>
-            <br>
-        @endforeach
-    </ul>
-    {{$books->links()}}
+            </div>
+
+            {{-- Pagination --}}
+            <div class="mt-6">
+                {{ $books->links() }}
+            </div>
+
         </div>
+    </div>
 </div>

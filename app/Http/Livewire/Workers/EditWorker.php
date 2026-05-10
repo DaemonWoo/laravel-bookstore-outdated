@@ -9,8 +9,11 @@ use Livewire\Component;
 class EditWorker extends Component
 {
     public $name = '';
+
     public $email = '';
+
     public $password = '';
+
     public $workerId;
 
     protected $rules = [
@@ -23,21 +26,25 @@ class EditWorker extends Component
     {
         $this->workerId = $id;
     }
+
     public function edit()
     {
         $this->validate();
         User::where('id', $this->workerId)->update([
             'name' => $this->name,
             'email' => $this->email,
-            'password' => Hash::make($this->password)
+            'password' => Hash::make($this->password),
         ]);
+
         return redirect()->intended(route('workers'))->with('status', 'Worker updated successfully!');
     }
+
     public function render()
     {
         $worker = User::findOrFail($this->workerId);
+
         return view('livewire.worker.edit-worker', [
-            'worker' => $worker
+            'worker' => $worker,
         ]);
     }
 }

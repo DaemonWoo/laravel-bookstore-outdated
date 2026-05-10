@@ -13,11 +13,13 @@ class Navigation extends Component
     {
         return redirect()->route('categories', ['cats' => $this->cats]);
     }
+
     public function render()
     {
         $user = Auth::user();
+
         return view('livewire.components.navigation', [
-            'user' => $user
+            'user' => $user,
         ]);
     }
 }

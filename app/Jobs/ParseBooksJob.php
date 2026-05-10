@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -30,7 +29,7 @@ class ParseBooksJob implements ShouldQueue
     {
         $chunkSize = 100;
 
-        Excel::filter('chunk')->load('book_registry.xlsx')->chunk($chunkSize, function($results) {
+        Excel::filter('chunk')->load('book_registry.xlsx')->chunk($chunkSize, function ($results) {
             foreach ($results as $row) {
                 // process each book row here
             }
