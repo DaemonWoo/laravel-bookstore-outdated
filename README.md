@@ -46,5 +46,4 @@ docker-compose exec app php artisan migrate --seed
 
 | Роль          | Email                  | Пароль   |
 | ------------- | ---------------------- | -------- |
-| Администратор | <admin@example.com>    | password |
-| Сотрудник     | <employee@example.com> | password |
+| Администратор | <admin@domain.com>    | 123456 |
