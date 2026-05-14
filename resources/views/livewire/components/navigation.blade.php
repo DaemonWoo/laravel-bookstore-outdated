@@ -6,7 +6,7 @@
 
                 {{-- Logo --}}
                 <a href="/" class="flex items-center space-x-2">
-                    <img src="/images/logo.png" class="h-8 w-8" alt="Logo" />
+                    <img src="/images/logo.png" class="h-8 w-8" alt="Logo"/>
 
                     <span class="text-xl font-semibold text-gray-800 dark:text-white">
                         Bookstore
@@ -19,13 +19,13 @@
                     <a href="/" class="nav-link">Home</a>
 
                     @if(auth()->user()->isWorker())
-                    <a href="/workers" class="nav-link">Workers</a>
+                        <a href="/workers" class="nav-link">Workers</a>
                     @endif
 
                     <a href="/books" class="nav-link">Books</a>
 
                     @if($user)
-                    <a href="/logout" class="btn-outline">Logout</a>
+                        <a href="/logout" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition" >Logout</a>
                     @else
                     <a href="/login" class="btn-outline">Login</a>
                     @endif
@@ -33,9 +33,11 @@
                 </div>
 
                 {{-- Mobile Button --}}
-                <button @click="open = !open" class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" aria-label="Toggle menu">
+                <button @click="open = !open"
+                        class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                        aria-label="Toggle menu">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M3 5h14M3 10h14M3 15h14" clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M3 5h14M3 10h14M3 15h14" clip-rule="evenodd"/>
                     </svg>
                 </button>
 
@@ -43,14 +45,15 @@
         </div>
 
         {{-- Mobile Menu --}}
-        <div x-show="open" x-transition class="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+        <div x-show="open" x-transition
+             class="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
 
             <div class="px-4 py-3 space-y-2">
 
                 <a href="/" class="mobile-link">Home</a>
 
                 @if(auth()->user()->isWorker())
-                <a href="/workers" class="mobile-link">Workers</a>
+                    <a href="/workers" class="mobile-link">Workers</a>
                 @endif
 
                 <a href="/books" class="mobile-link">Books</a>
@@ -58,9 +61,9 @@
                 <a href="/parse-table" class="mobile-link">Parse table</a>
 
                 @if($user)
-                <a href="/logout" class="mobile-link">Logout</a>
+                    <a href="/logout" class="mobile-link btn-logout">Logout</a>
                 @else
-                <a href="/login" class="mobile-link">Login</a>
+                    <a href="/login" class="mobile-link">Login</a>
                 @endif
 
             </div>
@@ -72,15 +75,18 @@
 {{-- Reusable styles (Blade-friendly) --}}
 <style>
     .nav-link {
-        @apply text-gray-700 dark: text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium;
+        @apply text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium;
     }
 
     .btn-outline {
-        @apply px-3 py-1 border border-cyan-500 text-gray-700 dark: text-gray-200 rounded-md hover:bg-cyan-50 dark:hover:bg-gray-800;
+        @apply px-3 py-1 border border-cyan-500 text-gray-700 dark:text-gray-200 rounded-md hover:bg-cyan-50 dark:hover:bg-gray-800 transition;
     }
 
     .mobile-link {
-        @apply block px-3 py-2 rounded-md text-gray-700 dark: text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800;
+        @apply block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition;
     }
 
+    .btn-logout {
+        @apply px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 shadow-sm transition;
+    }
 </style>

@@ -4,9 +4,7 @@ namespace App\Http\Livewire\Workers;
 
 use App\Jobs\SendWorkerCreatedEmail;
 use App\Models\User;
-use App\Notifications\WorkerCreatedNotification;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class CreateWorker extends Component

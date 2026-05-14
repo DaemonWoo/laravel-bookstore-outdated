@@ -18,17 +18,6 @@ use App\Http\Livewire\Workers\EditWorker;
 use App\Http\Livewire\Workers\WorkersList;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your , application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::middleware('isWorker')->group(function () {
     Route::get('/categories/create', CreateBookCategory::class);
     Route::get('/categories/{id}/edit', EditBookCategory::class)->name('edit-category');
@@ -62,10 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{id}', BookComponent::class)->name('book');
 
     Route::get('/categories', BookCategoryList::class)->name('categories');
-
-    Route::get('/excel', function () {
-        return view('excel');
-    });
 });
 
 Route::middleware('auth')->group(function () {
