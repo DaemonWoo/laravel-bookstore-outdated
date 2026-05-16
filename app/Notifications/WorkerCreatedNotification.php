@@ -3,10 +3,11 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WorkerCreatedNotification extends Notification
+class WorkerCreatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -36,12 +37,9 @@ class WorkerCreatedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Новый сотрудник создан')
-            ->greeting('Привет!')
-            ->line('Новый сотрудник был создан.')
-            ->line('Его емэйл: '.$this->worker->email)
-            ->line('Thank you for using our application!')
-            ->action('Просмотреть сотрудников', url('/workers'));
+            ->subject('Ваш аккаунт сотрудника создан')
+            ->greeting('Добро пожаловать!')
+            ->line('Ваш аккаунт сотрудника был создан.');
     }
 
     /**

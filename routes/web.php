@@ -51,9 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{id}', BookComponent::class)->name('book');
 
     Route::get('/categories', BookCategoryList::class)->name('categories');
-});
 
-Route::middleware('auth')->group(function () {
     Route::get('logout', LogoutController::class)
         ->name('logout');
 });

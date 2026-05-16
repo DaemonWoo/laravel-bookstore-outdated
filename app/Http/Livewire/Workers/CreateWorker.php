@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\Workers;
 
-use App\Jobs\SendWorkerCreatedEmail;
+use App\Models\Role;
 use App\Models\User;
+use App\Notifications\WorkerCreatedNotification;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
@@ -17,21 +18,22 @@ class CreateWorker extends Component
 
     protected $rules = [
         'name' => 'required|min:2',
-        'email' => 'required|email',
+        'email' => 'required|email|unique:users,email',
         'password' => 'required',
     ];
 
     public function create()
     {
         $this->validate();
-
+        $workerRole = Role::where('name', 'worker')->first();
         $newWorker = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            'role_id' => 1,
+            'role_id' => $workerRole->id,
         ]);
-        SendWorkerCreatedEmail::dispatch($newWorker);
+
+        $newWorker->notify(new WorkerCreatedNotification($newWorker));
 
         return redirect()->intended(route('workers'))->with('status', 'Worker added successfully!');
     }
